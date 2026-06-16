@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const foldersPath = path.join(__dirname, '../commands');
 
+// Get all .js extensions
 function getAllJSFiles(dir) {
     let results = [];
     const items = fs.readdirSync(dir, { withFileTypes: true });

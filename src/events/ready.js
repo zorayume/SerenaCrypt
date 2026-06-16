@@ -6,6 +6,9 @@ module.exports = {
 
     execute(client) {
         console.log(`\nReady! Logged in as ${client.user.tag}`);
+        console.log(
+            [...client.commands.keys()]
+        );
         client.user.setActivity(`Watching  ${client.guilds.cache.size} server(s)!`);
     }
 }

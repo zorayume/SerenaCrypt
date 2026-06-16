@@ -1,4 +1,4 @@
-const { CommandSlashBuilder, SlashCommandBuilder} = require('discord.js');
+const { SlashCommandBuilder} = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder().setName('help').setDescription('A help command that utilize users to know more.'),
