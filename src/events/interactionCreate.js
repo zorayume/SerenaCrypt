@@ -6,7 +6,7 @@ module.exports = {
     // Slash interactions
     async execute(interaction) {
         if (interaction.isChatInputCommand()) {
-            const command = interaction.client.commands.get(interaction.commandName);
+            const command = interaction.client.slashCommands.get(interaction.commandName);
 
             if (!command) {
                 console.error(`No command matching ${interaction.commandName} was found.`);
@@ -45,6 +45,19 @@ module.exports = {
             if (!menu) return;
 
             await menu.execute(interaction);
+        }
+
+        // Button interactions
+        if (interaction.isButton()) {
+            const [buttonName, buttonOwner] = interaction.customId.split(':')
+            const buttonNameAuthor = interaction.client.buttons.get(buttonName);
+
+            if (interaction.user.id !== buttonOwner) return interaction.reply({ content: "You don't have a button with owner!", ephemeral: true })
+
+            console.log("[DEBUG] - Button selected:", buttonNameAuthor);
+
+            if (!buttonNameAuthor) return;
+            await buttonNameAuthor.execute(interaction);
         }
     },
 };
