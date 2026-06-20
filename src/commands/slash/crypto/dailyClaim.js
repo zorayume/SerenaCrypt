@@ -7,38 +7,32 @@ module.exports = {
     async execute(interaction) {
         try {
             const user = await getUser(interaction.user.id);
-            const cooldown = 24 * 60 * 60 * 1000; // 24 hours
-            const rewards = Math.floor(Math.random() * 90) + 10;
+
+            const rewards = Math.floor(Math.random() * 90) * user.userMultiplier;
 
             if (user.lastDaily) {
-                const expires = user.lastDaily.getTime() + cooldown;
-
+                const utcCooldown = Date.UTC(user.lastDaily.getUTCFullYear(), user.lastDaily.getUTCMonth(), user.lastDaily.getUTCDate() + 1); // UTC timezone
+                const expires =  utcCooldown;
                 const remaining = expires - Date.now();
                 const hours = Math.floor(remaining / 1000 / 60 / 60)
                 const minutes = Math.floor(remaining / 1000 / 60) % 60;
 
                 if (Date.now() < expires) {
-                    return interaction.reply({
-                        content: `You have claimed today! Come back in \`${hours}h ${minutes}m\`!`,
-                    })
+                    return interaction.reply({ content: `You have claimed today! Come back in \`${hours}h ${minutes}m\`!` })
                 }
             }
 
             user.balance = (
                 BigInt(user.balance) + BigInt(rewards)
             ).toString();
-
             user.lastDaily = new Date();
 
             await user.save();
 
-            interaction.reply({
-                content: `You have claimed ${rewards} test tokens!`
-            });
+            interaction.reply({  content: `You have claimed ${rewards} test tokens!` });
+
         } catch (error) {
-            interaction.reply({
-                content: `${error}`,
-            })
+            interaction.reply({  content: `${error}` })
         }
     }
 }
