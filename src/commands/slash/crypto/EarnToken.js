@@ -19,9 +19,7 @@ module.exports = {
                 const minutes = Math.floor(remaining / 1000 / 60) % 60;
 
                 if (Date.now() < expires) {
-                    return interaction.reply({
-                        content: `You have earned tokens today! Come back in \`${hours}h ${minutes}m\`!`,
-                    })
+                    return interaction.reply({ content: `You have earned tokens today! Come back in \`${hours}h ${minutes}m\`!` })
                 }
             }
 
@@ -38,15 +36,14 @@ module.exports = {
                 .setColor("#70ff44")
                 .setTimestamp();
 
-            interaction.reply({
-                embeds: [embed]
-            })
+            interaction.reply({ embeds: [embed] })
         } catch (error) {
             let errorEmbed = new EmbedBuilder()
                 .setTitle("Well.. That was bad")
                 .setDescription(`${error}`)
                 .setColor("#ff0000")
                 .setTimestamp();
+
             interaction.reply({embeds: [errorEmbed] });
         }
     }

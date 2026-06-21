@@ -21,6 +21,11 @@ const Users = sequelize.define('users', {
         defaultValue: 0
     },
 
+    userMultiplier: {
+        type: DataTypes.INTEGER,
+        defaultValue: 1.00
+    },
+
     lastDaily: {
         type: DataTypes.DATE,
         allowNull: true,

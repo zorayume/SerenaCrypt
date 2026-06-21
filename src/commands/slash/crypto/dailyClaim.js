@@ -18,7 +18,7 @@ module.exports = {
                 const minutes = Math.floor(remaining / 1000 / 60) % 60;
 
                 if (Date.now() < expires) {
-                    return interaction.reply({ content: `You have claimed today! Come back in \`${hours}h ${minutes}m\`!` })
+                    return interaction.reply({ content: `You have claimed your rewards today! Come back in \`${hours}h ${minutes}m\`!` })
                 }
             }
 
