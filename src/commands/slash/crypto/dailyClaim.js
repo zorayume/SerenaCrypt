@@ -12,13 +12,21 @@ module.exports = {
 
             if (user.lastDaily) {
                 const utcCooldown = Date.UTC(user.lastDaily.getUTCFullYear(), user.lastDaily.getUTCMonth(), user.lastDaily.getUTCDate() + 1); // UTC timezone
+
                 const expires =  utcCooldown;
                 const remaining = expires - Date.now();
+
                 const hours = Math.floor(remaining / 1000 / 60 / 60)
                 const minutes = Math.floor(remaining / 1000 / 60) % 60;
 
                 if (Date.now() < expires) {
-                    return interaction.reply({ content: `You have claimed your rewards today! Come back in \`${hours}h ${minutes}m\`!` })
+                    const alreadyClaimEmbed = new EmbedBuilder()
+                        .setTitle("Claimed Successfully")
+                        .setDescription(`You have claimed your rewards today! Come back in \`${hours}h ${minutes}m\`!`)
+                        .setFooter({ text: "Meanwhile consider using another command." })
+                        .setColor("#ED4245");
+
+                    return interaction.reply({ embeds: [alreadyClaimEmbed] });
                 }
             }
 
@@ -29,10 +37,14 @@ module.exports = {
 
             await user.save();
 
-            interaction.reply({  content: `You have claimed ${rewards} test tokens!` });
+            const claimedEmbed = new EmbedBuilder()
+                .setDescription(`You have claimed ${rewards} test tokens!`)
+                .setColor("#57F287")
+
+            interaction.reply({ embeds: [claimedEmbed] });
 
         } catch (error) {
-            interaction.reply({  content: `${error}` })
+            interaction.reply({ content: `${error}` })
         }
     }
 }
