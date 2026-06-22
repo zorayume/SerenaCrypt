@@ -21,9 +21,7 @@ module.exports = {
 
                 if (Date.now() < expires) {
                     const alreadyClaimEmbed = new EmbedBuilder()
-                        .setTitle("Claimed Successfully")
                         .setDescription(`You have claimed your rewards today! Come back in \`${hours}h ${minutes}m\`!`)
-                        .setFooter({ text: "Meanwhile consider using another command." })
                         .setColor("#ED4245");
 
                     return interaction.reply({ embeds: [alreadyClaimEmbed] });

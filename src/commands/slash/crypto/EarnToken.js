@@ -4,7 +4,7 @@ const getUser = require("../../../database/functions/getUser");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("earn-token")
-        .setDescription("Earn your token per day"),
+        .setDescription("Earn your token per hour"),
 
     async execute(interaction) {
         try {
@@ -19,7 +19,11 @@ module.exports = {
                 const minutes = Math.floor(remaining / 1000 / 60) % 60;
 
                 if (Date.now() < expires) {
-                    return interaction.reply({ content: `You have earned tokens today! Come back in \`${hours}h ${minutes}m\`!` })
+                    const alreadyClaimEmbed = new EmbedBuilder()
+                        .setDescription(`You have claimed your rewards today! Come back in \`${hours}h ${minutes}m\`!`)
+                        .setColor("#ED4245");
+
+                    return interaction.reply({ embeds: [alreadyClaimEmbed] });
                 }
             }
 
