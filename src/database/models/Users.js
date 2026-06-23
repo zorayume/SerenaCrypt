@@ -3,6 +3,7 @@ const sequelize = require('../database');
 const userIdWallet = require('../functions/userIdWallet');
 
 const Users = sequelize.define('users', {
+    // User ID Data
     userId: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -16,25 +17,49 @@ const Users = sequelize.define('users', {
         unique: true,
     },
 
-    balance: {
+    // User Balance Data
+
+    userBalance: {
         type: DataTypes.BIGINT,
         defaultValue: 0
     },
+
+    userLevel: {
+        type: DataTypes.INTEGER,
+        defaultValue: 1
+    },
+
+    userExp: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: true
+    },
+
+    // Boosting data
 
     userMultiplier: {
         type: DataTypes.INTEGER,
         defaultValue: 1.00
     },
 
-    lastDaily: {
+    // Statistics Data
+    userMineCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
+
+    // Cooldown Data
+
+    userLastDaily: {
         type: DataTypes.DATE,
         allowNull: true,
     },
 
-    lastEarn: {
+    userLastEarn: {
         type: DataTypes.DATE,
         allowNull: true,
     },
+
 }, {
     hooks: {
         beforeValidate: (user) => {
